@@ -1,7 +1,7 @@
 import os
 from flask import request, jsonify, render_template
 from room_system import app 
-from room_system.function import faceChecker, checkIn, checkOut, alreadyStay, stayIndex, leftIndex 
+from room_system.function import faceChecker, checkIn, checkOut, alreadyStay, stayIndex, leftIndex, leftToday 
 
 @app.route('/')
 def index():
@@ -29,12 +29,12 @@ def exit():
         return ''
 
 @app.route('/search')
-def exit():
+def search():
     query = request.args['query']
     if (query == 'now'):
-        return jsonify(stayIndex().name) 
+        return jsonify(stayIndex()) 
     elif (query == 'today'):
-        return jsonify(leftToday().name) 
+        return jsonify(leftToday()) 
     else:
         return '' 
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-import numpy as np
+import numpy as np, datetime
 from PIL import Image
-from datetime import datetime
 from room_system import db
 from room_system.models import StayMember, LeftMember 
 from keras.models import Sequential
@@ -14,7 +13,8 @@ def leftIndex():
     return LeftMember.query.order_by(LeftMember.id.desc()).all()
 
 def leftToday():
-    return LeftMember.query.filter((LeftMember.exit_datetime.year, LeftMember.exit_datetime.month, LeftMember.exit_datetime.day)== datetime.date.today()).all()
+    today = datetime.date.today()
+    return LeftMember.query.filter(LeftMember.exit_datetime <= today).all()
 
 def alreadyStay(name):
     from room_system.models import StayMember
