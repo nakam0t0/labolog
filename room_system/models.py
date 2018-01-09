@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json, urllib.request as re
 from room_system import db
 from datetime import datetime
