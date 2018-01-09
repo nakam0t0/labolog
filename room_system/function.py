@@ -14,7 +14,7 @@ def leftIndex():
 
 def leftToday():
     today = datetime.date.today()
-    return LeftMember.query.filter(LeftMember.exit_datetime <= today).all()
+    return LeftMember.query.filter(LeftMember.exit_datetime >= today).all()
 
 def alreadyStay(name):
     from room_system.models import StayMember

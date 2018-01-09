@@ -3,6 +3,7 @@ from flask import request, jsonify, render_template
 from room_system import app 
 from room_system.function import faceChecker, checkIn, checkOut, alreadyStay, stayIndex, leftIndex, leftToday 
 
+
 @app.route('/')
 def index():
     stay_members = stayIndex()
@@ -30,11 +31,15 @@ def exit():
 
 @app.route('/search')
 def search():
+    app.config['JSON_AS_ASCII'] = False
+    response = []
     query = request.args['query']
     if (query == 'now'):
-        return jsonify(stayIndex()) 
+        result = stayIndex() 
     elif (query == 'today'):
-        return jsonify(leftToday()) 
+        result = leftToday() 
     else:
-        return '' 
-
+        result = None
+    for i in result:
+        response.append(i.name)
+    return jsonify(response)
