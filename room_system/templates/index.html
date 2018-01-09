@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+  
+<div class=page>
+  <h1>Stay Members</h1>
+  <table class=entries>
+    <tr><th>名前</th><td>入室時刻</td><td>入室時曜日</td><td>入室時天気</td></tr>
+  {% for member in stay_members %}
+    <tr><th>{{ member.name }}</th><td>{{ member.enter_datetime }}</td><td>{{ member.enter_weekday }}</td><td>{{ member.enter_weather }}</td></tr>
+  {% else %}
+    <tr><em>Nobody</em></tr>
+  {% endfor %}
+  </table>
+</div>
+<div class=page>
+  <h1>Left Members</h1>
+  <table class=entries>
+  <tr><th>名前</th><td>入室時刻</td><td>入室時曜日</td><td>入室時天気</td><td>退室時刻</td><td>退室時曜日</td><td>退室時天気</td></tr>
+  {% for member in left_members %}
+    <tr><th>{{ member.name }}</th><td>{{ member.enter_datetime }}</td><td>{{ member.enter_weekday }}</td><td>{{ member.enter_weather }}</td><td>{{ member.exit_datetime }}</td><td>{{ member.exit_weekday }}</td><td>{{ member.exit_weather }}</td></tr>
+  {% else %}
+    <tr><em>Nobody</em></tr>
+  {% endfor %}
+  </table>
+</div>
+
+  <form method="post" action="/enter" enctype="multipart/form-data">
+    <input type="file" id="enter_face" name="enter_face">
+    <input type="submit" value="入室" class="btn">
+  </form>
+
+  <form method="post" action="/exit" enctype="multipart/form-data">
+    <input type="file" id="exit_face" name="exit_face">
+    <input type="submit" value="退室" class="btn">
+  </form>
+
+{% endblock %}

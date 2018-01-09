@@ -1,0 +1,10 @@
+<!doctype html>
+<title>room_system</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class="head">
+    <h1>Room System</h1>
+</div>
+{% for message in get_flashed_messages() %}
+<div class=flash>{{ message }}</div>
+{% endfor %}
+{% block body %}{% endblock %}
