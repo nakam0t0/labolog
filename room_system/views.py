@@ -1,5 +1,5 @@
 import os
-from flask import request, jsonify, render_template, redirect, flash
+from flask import request, jsonify, render_template, redirect, flash, url_for
 from room_system import app 
 from room_system.function import faceChecker, checkIn, checkOut, alreadyStay, stayIndex, leftIndex, leftToday 
 
@@ -16,8 +16,7 @@ def enter():
     member = faceChecker(upload_file)
     if (not alreadyStay(member)):
         flash(checkIn(member))
-    redirect('/')
-        
+    return redirect(url_for('index'))
 
 @app.route('/exit', methods=['POST'])
 def exit():
@@ -25,7 +24,7 @@ def exit():
     member = faceChecker(upload_file)
     if (alreadyStay(member)):
         flash(checkOut(member))
-    redirect('/')
+    return redirect(url_for('index'))
 
 @app.route('/search')
 def search():
