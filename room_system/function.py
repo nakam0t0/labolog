@@ -33,7 +33,7 @@ def checkOut(name):
     en_dt = stay_log.enter_datetime
     en_wd = stay_log.enter_weekday
     en_wt = stay_log.enter_weather
-    member = LeftMember(name=name, enter_datetime=en_dt, enter_weekday=en_wd, enter_weather=en_wd)
+    member = LeftMember(name=name, enter_datetime=en_dt, enter_weekday=en_wd, enter_weather=en_wt)
     db.session.add(member)
     db.session.commit()
     db.session.delete(stay_log)
