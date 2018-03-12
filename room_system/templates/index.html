@@ -1,37 +1,66 @@
-{% extends "layout.html" %}
-{% block body %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>LaboLog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>LaboLog</h1>
+      </div>
+
+        {% for message in get_flashed_messages() %}
+          <div class="alert alert-primary">{{ message }}</div>
+        {% endfor %}
+
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <ul class="list-group">
+            <li class="list-group-item active">Stay Members</li>
+            <li class="list-group-item">
+              <table class=table>
+                <tr><th>名前</th><th>入室時刻</th><th>入室時曜日</th><th>入室時天気</th></tr>
+                {% for member in stay_members %}
+                  <tr><th>{{ member.name }}</th><td>{{ member.enter_datetime }}</td><td>{{ member.enter_weekday }}</td><td>{{ member.enter_weather }}</td></tr>
+                {% else %}
+                  <tr><em>Nobody</em></tr>
+                {% endfor %}
+              </table>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <ul class="list-group">
+            <li class="list-group-item active">Left Members</li>
+            <li class="list-group-item">
+              <table class=table>
+                <tr><th>名前</th><th>入室時刻</th><th>入室時曜日</th><th>入室時天気</th><th>退室時刻</th><th>退室時曜日</th><th>退室時天気</th></tr>
+                {% for member in left_members %}
+                  <tr><th>{{ member.name }}</th><td>{{ member.enter_datetime }}</td><td>{{ member.enter_weekday }}</td><td>{{ member.enter_weather }}</td><td>{{ member.exit_datetime }}</td><td>{{ member.exit_weekday }}</td><td>{{ member.exit_weather }}</td></tr>
+                {% else %}
+                  <tr><em>Nobody</em></tr>
+                {% endfor %}
+              </table>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
   
-<div class=page>
-  <h1>Stay Members</h1>
-  <table class=entries>
-    <tr><th>名前</th><td>入室時刻</td><td>入室時曜日</td><td>入室時天気</td></tr>
-  {% for member in stay_members %}
-    <tr><th>{{ member.name }}</th><td>{{ member.enter_datetime }}</td><td>{{ member.enter_weekday }}</td><td>{{ member.enter_weather }}</td></tr>
-  {% else %}
-    <tr><em>Nobody</em></tr>
-  {% endfor %}
-  </table>
-</div>
-<div class=page>
-  <h1>Left Members</h1>
-  <table class=entries>
-  <tr><th>名前</th><td>入室時刻</td><td>入室時曜日</td><td>入室時天気</td><td>退室時刻</td><td>退室時曜日</td><td>退室時天気</td></tr>
-  {% for member in left_members %}
-    <tr><th>{{ member.name }}</th><td>{{ member.enter_datetime }}</td><td>{{ member.enter_weekday }}</td><td>{{ member.enter_weather }}</td><td>{{ member.exit_datetime }}</td><td>{{ member.exit_weekday }}</td><td>{{ member.exit_weather }}</td></tr>
-  {% else %}
-    <tr><em>Nobody</em></tr>
-  {% endfor %}
-  </table>
-</div>
+      <form method="post" action="/enter" enctype="multipart/form-data">
+        <input type="file" id="enter_face" name="enter_face">
+        <input type="submit" value="入室" class="btn">
+      </form>
+  
+      <form method="post" action="/exit" enctype="multipart/form-data">
+        <input type="file" id="exit_face" name="exit_face">
+        <input type="submit" value="退室" class="btn">
+      </form>
+    </div>
+  </body>
+</html>
 
-  <form method="post" action="/enter" enctype="multipart/form-data">
-    <input type="file" id="enter_face" name="enter_face">
-    <input type="submit" value="入室" class="btn">
-  </form>
-
-  <form method="post" action="/exit" enctype="multipart/form-data">
-    <input type="file" id="exit_face" name="exit_face">
-    <input type="submit" value="退室" class="btn">
-  </form>
-
-{% endblock %}
