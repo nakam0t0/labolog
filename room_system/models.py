@@ -1,20 +1,21 @@
+import datetime
 import json, urllib.request as re
 from room_system import db
-from datetime import datetime
+# from datetime import datetime
 
 # 曜日変換
 def weekday():
-    if datetime.now().weekday() == 0:
+    if datetime.datetime.now().weekday() == 0:
         return '月'
-    if datetime.now().weekday() == 1:
+    if datetime.datetime.now().weekday() == 1:
         return '火'
-    if datetime.now().weekday() == 2:
+    if datetime.datetime.now().weekday() == 2:
         return '水'
-    if datetime.now().weekday() == 3:
+    if datetime.datetime.now().weekday() == 3:
         return '木'
-    if datetime.now().weekday() == 4:
+    if datetime.datetime.now().weekday() == 4:
         return '金'
-    if datetime.now().weekday() == 5:
+    if datetime.datetime.now().weekday() == 5:
         return '土'
     return '日'
 
@@ -29,7 +30,7 @@ class StayMember(db.Model):
     __tablename__ = 'stay_members'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    enter_datetime = db.Column(db.DateTime, default=datetime.now())
+    enter_datetime = db.Column(db.DateTime, default=datetime.datetime.now())
     enter_weekday = db.Column(db.Integer, default=weekday())
     enter_weather = db.Column(db.Text, default=weather())
 
@@ -56,10 +57,10 @@ class LeftMember(db.Model):
     __tablename__ = 'left_members'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    enter_datetime = db.Column(db.DateTime, default=datetime.now())
+    enter_datetime = db.Column(db.DateTime, default=datetime.datetime.now())
     enter_weekday = db.Column(db.Integer, default=weekday())
     enter_weather = db.Column(db.Text, default=weather())
-    exit_datetime = db.Column(db.DateTime, default=datetime.now())
+    exit_datetime = db.Column(db.DateTime, default=datetime.datetime.now())
     exit_weekday = db.Column(db.Integer, default=weekday())
     exit_weather = db.Column(db.Text, default=weather())
     
