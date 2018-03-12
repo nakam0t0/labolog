@@ -1,44 +1,7 @@
-# -*- coding: utf-8 -*-
-import numpy as np, datetime
+import numpy as np
 from PIL import Image
-from room_system import db
-from room_system.models import StayMember, LeftMember 
 from keras.models import Sequential
 from keras.layers import Convolution2D, MaxPooling2D, Activation, Dropout, Flatten, Dense
-
-def stayIndex():
-    return StayMember.query.order_by(StayMember.id.desc()).all()
-
-def leftIndex():
-    return LeftMember.query.order_by(LeftMember.id.desc()).all()
-
-def leftToday():
-    today = datetime.date.today()
-    return LeftMember.query.filter(LeftMember.exit_datetime >= today).all()
-
-def alreadyStay(name):
-    from room_system.models import StayMember
-    result = StayMember.query.filter(StayMember.name == name).first()
-    return (result is not None)
-
-def checkIn(name):
-    from room_system.models import StayMember
-    member = StayMember(name=name)
-    db.session.add(member)
-    db.session.commit()
-    return 'こんにちは' + name + 'さん' 
-
-def checkOut(name):
-    stay_log = StayMember.query.filter(StayMember.name == name).first()
-    en_dt = stay_log.enter_datetime
-    en_wd = stay_log.enter_weekday
-    en_wt = stay_log.enter_weather
-    member = LeftMember(name=name, enter_datetime=en_dt, enter_weekday=en_wd, enter_weather=en_wt)
-    db.session.add(member)
-    db.session.commit()
-    db.session.delete(stay_log)
-    db.session.commit()
-    return 'さようなら' + name + 'さん' 
 
 # モデルを構築
 def build_model(in_shape, nb_classes):
